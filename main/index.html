@@ -1,0 +1,143 @@
+<html lang="en">
+<head>
+    <!-- Your existing head content -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="js/validation.js" defer></script>
+  
+</head>
+<body>
+
+<div class="row">
+    <div class="col-md-3">
+        <div id="qrcode" class="mt-5 text-center"></div>
+    </div>
+    <div class="col-md-9">
+        <div class="row no-gutters">
+            <div class="col-lg-12 col-md-12 order-md-last d-flex align-items-stretch">
+                <div class="contact-wrap w-100 p-md-5 p-4">
+                    <h3 class="mb-4">Students Attendance Form</h3>
+                    <form method="POST" id="contactForm" name="contactForm" class="contactForm" onsubmit="return validateForm();">
+                        <!-- Your form fields -->
+                                     
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="label" for="Fname">First Name</label>
+                                    <input type="text" class="form-control" name="Fname" id="Fname" placeholder="First Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="label" for="Sname">Second Name</label>
+                                    <input type="text" class="form-control" name="Sname" id="Sname" placeholder="Second Name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="label" for="ID">ID no</label>
+                                    <input type="text" class="form-control" name="ID" id="ID" placeholder="ID no">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="label" for="email">Email Address</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="label" for="Unit">Unit name</label>
+                                    <input type="text" class="form-control" name="Unit" id="Unit" placeholder="Unit">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="label" for="date">Date</label>
+                                    <input type="text" class="form-control" name="date" id="date" placeholder="Date">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="label" for="time">Time</label>
+                                    <input type="text" class="form-control" name="time" id="time" placeholder="Time">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="button" value="Generate QR" class="btn btn-primary" id="generateQrBtn">
+                                    <div class="submitting"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="text pl-3">
+            <p><span>SchoolQRcode attendance</span> <a href="#"></a></p>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#generateQrBtn").on("click", function () {
+            validateForm();
+        });
+    });
+
+    function validateForm() {
+        var Fname = document.getElementById('Fname').value;
+        var Sname = document.getElementById('Sname').value;
+        var S_ID = document.getElementById('ID').value;
+        var email = document.getElementById('email').value;
+        var Unit = document.getElementById('Unit').value;
+        var date = document.getElementById('date').value;
+        var Time = document.getElementById('time').value;
+
+        var errorMessage = '';
+
+        if (Fname === '') {
+            errorMessage += 'Please fill in the First Name field. ';
+        }
+
+        if (Sname === '') {
+            errorMessage += 'Please fill in the Second Name field. ';
+        }
+
+        if (S_ID === '') {
+            errorMessage += 'Please fill in the ID no field. ';
+        }
+
+        if (email === '') {
+            errorMessage += 'Please fill in the Email Address field. ';
+        }
+
+        if (Unit === '') {
+            errorMessage += 'Please fill in the Unit name field. ';
+        }
+
+        if (date === '') {
+            errorMessage += 'Please fill in the Date field. ';
+        }
+
+        if (Time === '') {
+            errorMessage += 'Please fill in the Time field. ';
+        }
+
+        if (errorMessage !== '') {
+            alert(errorMessage);
+            return false;
+        }
+
+        console.log('Name: ' + Fname + " " + Sname + ' ID:' + S_ID + " Email: " + email + " Unit: " + Unit + " Date: " + date + " Time: " + Time);
+
+        var url = "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=Name:" +
+            Fname + "%0a Email: " +" " +S_ID +" "+ email + " Unit: " + Unit + " Date: " + date + " Time: " + Time;
+
+        var imgTag = '<img src="' + url + '" alt="QR Code" height="200" width="200">';
+        document.getElementById('qrcode').innerHTML = imgTag;
+
+        return true;
+    }
+</script>
+</body>
+</html>
